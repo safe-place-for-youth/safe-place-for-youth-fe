@@ -22,7 +22,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cdj.safeplaceforyouth",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBeR7EOy9i3aSF2UwFm8WArMalcAB9oQUc"
+      }
     }
   }
 }
