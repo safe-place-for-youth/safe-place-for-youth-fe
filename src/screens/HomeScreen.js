@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryColor
   },
   titleContainer: {
-    flex: 2,
+    flex: 2.3,
     width: '100%',
     height: '100%'
   },
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     resizeMode: 'contain',
-    paddingBottom: '25%'
+    paddingBottom: '22%'
   },
   textContainer: {
     alignItems: 'center'
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 30,
-    paddingTop: 15
+    paddingTop: 20
   },
   card: {
     width: 180,

@@ -12,7 +12,12 @@ import MapScreen from '../screens/MapScreen';
 import Colors from '../constants/Colors';
 
 const HomeNavigator = createStackNavigator({
-  Home: HomeScreen,
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
   Detail: DetailScreen
 });
 
