@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 const ListScreen = () => {
   return (
     <View style={styles.screen}>
-      <Text>This is the List Screen</Text>
+      <Text>This is the List Screen OR IS IT?</Text>
     </View>
   );
 };
