@@ -12,6 +12,7 @@ const FavoritesScreen = () => {
         setPlace(res[0]);
       });
   }, []);
+  console.log(place.name);
   return (
     <View style={styles.screen}>
       <Text>An example of an actual place is: {place.name}</Text>
