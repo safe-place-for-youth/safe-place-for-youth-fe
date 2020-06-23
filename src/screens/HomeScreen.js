@@ -1,8 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { enableScreens } from 'react-native-screens';
-
-enableScreens();
 
 const HomeScreen = () => {
   return (
