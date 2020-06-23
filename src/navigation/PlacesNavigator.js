@@ -77,14 +77,8 @@ const PlacesTabNavigator = createBottomTabNavigator({
         height: 0,
       },
     },
-    tabInfo: {
-      tintColor: 'white'
-    },
-    tintColor: 'white',
-
-    tabBarColor: 'white',
     activeTintColor: Colors.accentColor,
-    showLabel: false,
+    showLabel: false
   }
 })
 

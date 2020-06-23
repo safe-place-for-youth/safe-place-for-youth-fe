@@ -2,9 +2,7 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 
-const TitleText = props => {
-  return <Text style={{ ...styles.title, ...props.style }}>{props.children}</Text>;
-};
+const TitleText = ({ style, children}) => <Text style={{ ...styles.title, ...style }}>{children}</Text>;
 
 const styles = StyleSheet.create({
   title: {

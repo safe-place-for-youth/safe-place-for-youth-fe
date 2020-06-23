@@ -2,9 +2,7 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 
-const BodyText = props => {
-  return <Text style={{ ...styles.text, ...props.style }}>{props.children}</Text>;
-};
+const BodyText = ({ style, children}) => <Text style={{ ...styles.text, ...style }}>{children}</Text>;
 
 const styles = StyleSheet.create({
   text: {
