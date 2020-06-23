@@ -9,6 +9,7 @@ import ListScreen from '../screens/ListScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MapScreen from '../screens/MapScreen';
+import Colors from '../constants/Colors';
 
 const HomeNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -30,38 +31,55 @@ const FavoritesNavigator = createStackNavigator({
   Detail: DetailScreen
 });
 
+const tabBarIcon = (name) => ({ tintColor, focused }) => (
+  <Feather name={name} size={24} color={focused ? tintColor : 'white'} />
+)
+
 const PlacesTabNavigator = createBottomTabNavigator({
   PlacesHome: {
     screen: HomeNavigator,
     navigationOptions: {
-      tabBarIcon: tabInfo => <Feather name="home" size={24} color="white" />
+      tabBarIcon: tabBarIcon('home')
     }
   },
   PlacesMap: {
     screen: MapNavigator,
     navigationOptions: {
-      tabBarIcon: tabInfo => <Feather name="map-pin" size={24} color="white" />
+      tabBarIcon: tabBarIcon('map-pin')
     }
   },
   PlacesList: {
     screen: ListNavigator,
     navigationOptions: {
-      tabBarIcon: tabInfo => <Feather name="search" size={24} color="white" />
+      tabBarIcon: tabBarIcon('search')
     }
   },
   PlacesFavorites: {
     screen: FavoritesNavigator,
     navigationOptions: {
-      tabBarIcon: tabInfo => <Feather name="star" size={24} color="white" />
+      tabBarIcon: tabBarIcon('star')
     }
   },
 }, {
   tabBarOptions: {
     style: {
-      backgroundColor: 'blue'
+      backgroundColor: Colors.primaryColor,
+      borderTopColor: 'transparent',
+      borderTopWidth: 0,
+      elevation: 0,
+      shadowOpacity: 0,
+      shadowOffset: {
+        height: 0,
+      },
     },
-    activeTintColor: '#1B26A4',
-    showLabel: false
+    tabInfo: {
+      tintColor: 'white'
+    },
+    tintColor: 'white',
+
+    tabBarColor: 'white',
+    activeTintColor: Colors.accentColor,
+    showLabel: false,
   }
 })
 
