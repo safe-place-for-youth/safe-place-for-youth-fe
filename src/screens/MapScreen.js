@@ -47,12 +47,7 @@ const MapScreen = () => {
         }}
       >
         {markers}
-        {selectedPlace && <BottomShape>
-          <View style={styles.textContainer}>
-            <TitleText style={styles.titleText}>{selectedPlace}</TitleText>
-            <BodyText style={styles.bodyText}>Open until 5:00 pm</BodyText>
-          </View>
-        </BottomShape>}
+        {selectedPlace && <BottomShape selectedPlace={selectedPlace} />}
       </MapView>
     </View>
   );
@@ -72,26 +67,7 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
     width: '100%',
-    height: '100%'
-  },
-  textContainer: {
-    position: 'relative',
-    left: '4%',
-    bottom: '-130%',
-    width: '65%',
-    alignItems: 'center',
-    justifyContent: 'flex-end'
-  },
-  titleText: {
-    color: 'white',
-    fontSize: 24,
-    textAlign: 'center',
-    marginVertical: 10
-  },
-  bodyText: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center'
+    height: '100%',
   }
 });
 
