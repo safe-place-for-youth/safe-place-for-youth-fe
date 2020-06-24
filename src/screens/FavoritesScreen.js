@@ -1,20 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { fetchAllPlaces } from '../utils/fetchData';
 
 const FavoritesScreen = () => {
-  const [places, setPlaces] = useState([]);
-  const [place, setPlace] = useState({});
-  useEffect(() => {
-    fetchAllPlaces()
-      .then(res => {
-        setPlaces(res);
-        setPlace(res[0]);
-      });
-  }, []);
   return (
     <View style={styles.screen}>
-      <Text>An example of an actual place is: {place.name}</Text>
+      <Text>This is the Favorites Screen</Text>
     </View>
   );
 };

@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { fetchAllPlaces } from '../utils/fetchData';
 
 const MapScreen = () => {
+  const [places, setPlaces] = useState([]);
+
+  useEffect(() => {
+    fetchAllPlaces()
+      .then(res => setPlaces(res));
+  }, []);
+
+  const markers = places.map(({latitude, longitude, category, name}) => (
+    <Marker coordinate={{ latitude, longitude}} key={name}>
+      <MapView.Callout tooltip style={styles.customView}>
+        <View style={styles.calloutText}>
+          <Text>{category}</Text>
+        </View>
+      </MapView.Callout>
+    </Marker>
+    ))
+
   return (
     <View style={styles.screen}>
       <MapView 
@@ -15,13 +33,7 @@ const MapScreen = () => {
           longitudeDelta: 0.2,
         }}
       >
-        <Marker coordinate={{ latitude: 45.524756, longitude: -122.65703 }}>
-          <MapView.Callout tooltip style={styles.customView}>
-            <View style={styles.calloutText}>
-              <Text>Library</Text>
-            </View>
-          </MapView.Callout>
-        </Marker>
+        {markers}
       </MapView>
     </View>
   );
@@ -32,7 +44,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   map: {
     flex: 1,
