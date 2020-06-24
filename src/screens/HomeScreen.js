@@ -1,10 +1,28 @@
-import React from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ImageBackground, FlatList, StyleSheet } from 'react-native';
 import BodyText from '../components/BodyText';
 import HeadingText from '../components/TitleText';
+import Card from '../components/Card';
 import Colors from '../constants/Colors';
+import { fetchAllPlaces } from '../utils/fetchData';
 
 const HomeScreen = () => {
+  const [places, setPlaces] = useState([]);
+
+  useEffect(() => {
+    fetchAllPlaces()
+      .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
+      .then(slicedPlaces => setPlaces(slicedPlaces));
+  }, []);
+  
+  const renderPlaceCard = placeData => (
+    <Card 
+      placeName={placeData.item.name} 
+      openStatus="Open until 5:00 pm" 
+      style={styles.card}
+    />
+  );
+
   return (
     <View style={styles.screen}>
       <View style={styles.titleContainer}>
@@ -12,17 +30,21 @@ const HomeScreen = () => {
           source={require('../../assets/shapes/white-concave-shape-short.png')} 
           style={styles.image}
         >
-          <View style={styles.textContainer}>
+          <View style={styles.headingContainer}>
             <BodyText style={styles.bodyText}>find your</BodyText>
             <HeadingText style={styles.titleText}>Safe Place</HeadingText>
           </View>
         </ImageBackground>
       </View>
       <View style={styles.contentContainer}>
-        <View style={styles.content}>
-          <BodyText style={styles.whiteBodyText}>nearby</BodyText>
-          <View style={styles.card}>
-          </View>
+        <View style={styles.listContainer}>
+          <BodyText style={{...styles.bodyText, color: 'white' }}>nearby</BodyText>
+          <FlatList
+            keyExtractor={item => item._id}
+            data={places}
+            horizontal={true}
+            renderItem={renderPlaceCard}
+          />
         </View>
       </View>
     </View>
@@ -32,8 +54,6 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: Colors.primaryColor
   },
   titleContainer: {
@@ -48,7 +68,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     paddingBottom: '22%'
   },
-  textContainer: {
+  headingContainer: {
     alignItems: 'center'
   },
   bodyText: {
@@ -61,21 +81,13 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%'
   },
-  content: {
+  listContainer: {
     paddingHorizontal: 30,
     paddingTop: 20
   },
   card: {
-    width: 180,
-    height: 100,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: 'white'
-  },
-  whiteBodyText: {
-    color: 'white',
-    fontSize: 22,
-    paddingBottom: 10
+    marginRight: 30,
+    marginTop: 10
   }
 });
 
