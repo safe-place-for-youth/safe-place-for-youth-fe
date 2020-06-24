@@ -3,6 +3,7 @@ import {
   View, 
   ImageBackground, 
   FlatList, 
+  TouchableOpacity, 
   StyleSheet 
 } from 'react-native';
 
@@ -12,7 +13,7 @@ import HeadingText from '../components/TitleText';
 import Colors from '../constants/Colors';
 import { fetchAllPlaces } from '../utils/fetchData';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
@@ -22,12 +23,20 @@ const HomeScreen = () => {
   }, []);
   
   const renderPlaceCard = placeData => (
-    <Card 
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate({ routeName: 'Detail', params: {
+          placeId: placeData.item._id
+        }});
+      }}
       style={styles.card}
-      placeName={placeData.item.name} 
-      isOpen={true}
-      time='1700'
-    />
+      >
+        <Card 
+          placeName={placeData.item.name} 
+          isOpen={true}
+          time='1700'
+        />
+      </TouchableOpacity>
   );
 
   return (
@@ -50,6 +59,7 @@ const HomeScreen = () => {
             keyExtractor={item => item._id}
             data={places}
             horizontal={true}
+            showsHorizontalScrollIndicator={false}
             renderItem={renderPlaceCard}
           />
         </View>

@@ -76,9 +76,9 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     position: 'relative',
-    left: '19.5%',
-    bottom: '-15%',
-    width: '60%',
+    left: '4%',
+    bottom: '-130%',
+    width: '65%',
     alignItems: 'center',
     justifyContent: 'flex-end'
   },
