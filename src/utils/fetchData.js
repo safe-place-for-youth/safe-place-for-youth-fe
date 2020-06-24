@@ -12,4 +12,17 @@ export const fetchAllPlaces = () => {
       }
     }))
     .catch((error) => {console.error(error)});
-}
+};
+
+export const fetchPlace = id => {
+  return fetch(`${API_URL}/api/v1/places/${id}`)
+    .then(res => res.json())
+    .then(place => {
+      const colorObj = colorCategories.find(obj => obj.category === place.category);
+      return {
+        ...place,
+        color: colorObj.color
+      }
+    })
+    .catch((error) => {console.error(error)});
+};
