@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import TitleText from './TitleText';
-import BodyText from './BodyText';
+import OpenText from './OpenText';
+import ClosedText from './ClosedText';
 
-const Card = ({ placeName, openStatus, style }) => (
+const Card = ({ placeName, isOpen, time, style }) => (
   <View style={{ ...styles.card, ...style }}>
     <TitleText style={styles.heading}>{placeName}</TitleText>
-    <BodyText>{openStatus}</BodyText>
+    {isOpen ? <OpenText time={time} /> : <ClosedText />}
   </View>
 );
 
