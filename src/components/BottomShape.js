@@ -4,12 +4,14 @@ import Colors from '../constants/Colors';
 import TitleText from '../components/TitleText';
 import BodyText from '../components/BodyText';
 
-const BottomShape = ({ children, style, selectedPlace }) => <View style={{...styles.shape, style}}>
-  <View style={styles.textContainer}>
-    <TitleText style={styles.titleText}>{selectedPlace}</TitleText>
-    <BodyText style={styles.bodyText}>Open until 5:00 pm</BodyText>
+const BottomShape = ({ children, style, selectedPlace }) => (
+  <View style={{...styles.shape, style}}>
+    <View style={styles.textContainer}>
+      <TitleText style={styles.titleText}>{selectedPlace}</TitleText>
+      <BodyText style={styles.bodyText}>Open until 5:00 pm</BodyText>
+    </View>
   </View>
-</View>;
+);
 
 const styles = StyleSheet.create({
   shapeContainer: {
