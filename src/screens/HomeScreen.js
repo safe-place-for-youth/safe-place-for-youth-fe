@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, ImageBackground, FlatList, StyleSheet } from 'react-native';
+import { 
+  View, 
+  ImageBackground, 
+  FlatList, 
+  StyleSheet 
+} from 'react-native';
+
+import Card from '../components/Card';
 import BodyText from '../components/BodyText';
 import HeadingText from '../components/TitleText';
-import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import { fetchAllPlaces } from '../utils/fetchData';
 
@@ -12,14 +18,15 @@ const HomeScreen = () => {
   useEffect(() => {
     fetchAllPlaces()
       .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
-      .then(slicedPlaces => setPlaces(slicedPlaces));
+      .then(nearestPlaces => setPlaces(nearestPlaces));
   }, []);
   
   const renderPlaceCard = placeData => (
     <Card 
-      placeName={placeData.item.name} 
-      openStatus="Open until 5:00 pm" 
       style={styles.card}
+      placeName={placeData.item.name} 
+      isOpen={true}
+      time='1700'
     />
   );
 
