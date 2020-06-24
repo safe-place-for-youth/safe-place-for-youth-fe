@@ -1,6 +1,15 @@
 import { API_URL } from 'react-native-dotenv';
+import { colorCategories } from '../constants/Colors';
+
 export const fetchAllPlaces = () => {
   return fetch(`${API_URL}/api/v1/places`)
     .then(res => res.json())
+    .then(places => places.map(place => {
+      const colorObj = colorCategories.find(obj => obj.category === place.category);
+      return {
+        ...place,
+        color: colorObj.color
+      }
+    }))
     .catch((error) => {console.error(error)});
 }

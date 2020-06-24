@@ -22,17 +22,32 @@ const HomeNavigator = createStackNavigator({
 });
 
 const ListNavigator = createStackNavigator({
-  List: ListScreen,
+  List: {
+    screen: ListScreen,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
   Detail: DetailScreen
 });
 
 const MapNavigator = createStackNavigator({
-  Map: MapScreen,
+  Map: {
+    screen: MapScreen,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
   Detail: DetailScreen
 });
 
 const FavoritesNavigator = createStackNavigator({
-  Favorites: FavoritesScreen,
+  Favorites: {
+    screen: FavoritesScreen,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
   Detail: DetailScreen
 });
 
