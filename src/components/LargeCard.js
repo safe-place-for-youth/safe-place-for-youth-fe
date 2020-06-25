@@ -13,16 +13,16 @@ const LargeCard = ({ placeName, isOpen, time, style }) => (
 
 const styles = StyleSheet.create({
   card: {
-    marginTop: 10,
+    marginVertical: 18,
     width: '100%',
-    height: 100,
+    height: 110,
     padding: 15,
     borderRadius: 10,
     justifyContent: 'space-between',
     backgroundColor: 'white'
   },
   heading: {
-    fontSize: 14
+    fontSize: 16
   }
 });
 

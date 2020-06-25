@@ -18,20 +18,24 @@ const ListScreen = ({ navigation }) => {
   return (
     <LinearGradient style={styles.screen} colors={[Colors.accentColor, Colors.primaryColor]}>
       <View style={styles.shape}>
-        <View style={styles.searchContainer} >
-          <TextInput 
-            onChangeText={(newValue) => setSearchInput(newValue)}
-            autoCapitalize='none'
-            autoCorrect={false}
-            value={searchInput}
-            style={styles.searchInput}
-            placeholder='Search'
-            placeholderTextColor='white'
-          />
-          <RadioButtonList category={category} setCategory={setCategory} />
+        <View style={styles.queryContainer} >
+          <View style={styles.searchContainer}>
+            <TextInput 
+              onChangeText={(newValue) => setSearchInput(newValue)}
+              autoCapitalize='none'
+              autoCorrect={false}
+              value={searchInput}
+              style={styles.searchInput}
+              placeholder='Search'
+              placeholderTextColor='white'
+            />
+          </View>
+          <View style={styles.radioButtonContainer}>
+            <RadioButtonList category={category} setCategory={setCategory} />
+          </View>
         </View>
       </View>
-      <View style={styles.list}>
+      <View style={styles.placeList}>
         <CardList places={filteredPlaces} navigation={navigation} />
       </View>
     </LinearGradient>
@@ -52,21 +56,31 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 200,
     alignItems: 'center',
   },
-  searchContainer: {
-    width: '100%',
+  queryContainer: {
+    flex: 1,
+    width: '88%',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
+  },
+  searchContainer: {
+    width: '88%',
+    alignItems: 'center',
+    marginTop: 35,
+    marginBottom: 25
+  },
+  radioButtonContainer: {
+    flex: 1,
   },
   searchInput: {
-    width: '80%',
+    width: '100%',
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 5,
     color: 'white',
-    backgroundColor: Colors.primaryColor,
+    backgroundColor: Colors.primaryColor
   },
-  list: {
+  placeList: {
     flex: 4,
     height: '100%',
     width: '100%',
