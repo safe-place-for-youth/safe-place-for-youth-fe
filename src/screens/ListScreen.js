@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { View, StyleSheet, TouchableWithoutFeedback, FlatList, TextInput } from 'react-native';
-import BodyText from '../components/BodyText';
+import { 
+  View, 
+  StyleSheet, 
+  FlatList, 
+  TextInput 
+} from 'react-native';
+
 import CardList from '../components/CardList';
-import Colors from '../constants/Colors';
 import { fetchAllPlaces } from '../utils/fetchData';
-import { colorCategories } from'../constants/Colors';
+import Colors, { colorCategories } from'../constants/Colors';
+import RadioButton from './RadioButton';
 
 const ListScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
@@ -26,21 +31,7 @@ const ListScreen = ({ navigation }) => {
     setFilteredPlaces(filteredElements);
   }, [category])
 
-  const renderFilterButtons = filterData => { 
-    const activeStyle = {...styles.radioButton, backgroundColor: filterData.item.color, color: 'white', borderColor: filterData.item.color};
-   
-    const inactiveStyle = {...styles.radioButton, backgroundColor: 'white', color: filterData.item.color, borderColor: filterData.item.color };
-
-    const radioButtonStyle = (category === filterData.item.category) ? activeStyle : inactiveStyle;
-
-    return (
-    <TouchableWithoutFeedback onPress={() => setCategory(filterData.item.category)}>
-      <View style={styles.radioButtonContainer}>
-        <BodyText style={radioButtonStyle}>{filterData.item.category}</BodyText>
-      </View>
-    </TouchableWithoutFeedback>
-    )
-  };
+  const renderFilterButtons = filterData => <RadioButton filterData={filterData} category={category} setCategory={setCategory} />;
 
   return (
     <LinearGradient style={styles.screen} colors={[Colors.accentColor, Colors.primaryColor]}>
@@ -105,13 +96,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginTop: 30
-  },
-  radioButton: {
-    borderWidth: 2,
-    borderRadius: 20, 
-    paddingVertical: 5, 
-    paddingHorizontal: 20,
-    overflow: 'hidden' 
   }
 });
 
