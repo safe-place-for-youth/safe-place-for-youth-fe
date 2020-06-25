@@ -57,7 +57,6 @@ const HomeScreen = ({ navigation }) => {
           <BodyText style={{...styles.bodyText, color: 'white', marginLeft: 20 }}>nearby</BodyText>
           <FlatList
             keyExtractor={item => item._id}
-            style={(item, i) => ({marginLeft: (i === 0) ? 20 : 0})}
             data={places}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
