@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { 
   View, 
@@ -7,28 +7,13 @@ import {
 } from 'react-native';
 
 import CardList from '../components/CardList';
-import { fetchAllPlaces } from '../utils/fetchData';
 import RadioButtonList from '../components/RadioButtonList';
 import Colors from'../constants/Colors';
+import { useGetPlaces } from '../hooks/getPlaces';
 
 const ListScreen = ({ navigation }) => {
-  const [places, setPlaces] = useState([]);
-  const [filteredPlaces, setFilteredPlaces] = useState([]);
-  const [category, setCategory] = useState('');
   const [searchInput, setSearchInput] = useState('');
-
-  useEffect(() => {
-    fetchAllPlaces()
-      .then(fetchedPlaces => {
-        setPlaces(fetchedPlaces);
-        setFilteredPlaces(fetchedPlaces);
-      });
-  }, []);
-
-  useEffect(() => {
-    const filteredElements = places.filter(place => place.category === category);
-    setFilteredPlaces(filteredElements);
-  }, [category])
+  const { filteredPlaces, category, setCategory } = useGetPlaces();
 
   return (
     <LinearGradient style={styles.screen} colors={[Colors.accentColor, Colors.primaryColor]}>
