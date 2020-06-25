@@ -29,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
           placeId: placeData.item._id
         }});
       }}
-      style={styles.card}
+      style={{...styles.card, marginLeft: placeData.index === 0 ? 20 : 0}}
       >
         <Card 
           placeName={placeData.item.name} 
@@ -54,9 +54,10 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.listContainer}>
-          <BodyText style={{...styles.bodyText, color: 'white' }}>nearby</BodyText>
+          <BodyText style={{...styles.bodyText, color: 'white', marginLeft: 20 }}>nearby</BodyText>
           <FlatList
             keyExtractor={item => item._id}
+            style={(item, i) => ({marginLeft: (i === 0) ? 20 : 0})}
             data={places}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
@@ -99,11 +100,10 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   listContainer: {
-    paddingHorizontal: 30,
     paddingTop: 20
   },
   card: {
-    marginRight: 30,
+    marginRight: 20,
     marginTop: 10
   }
 });
