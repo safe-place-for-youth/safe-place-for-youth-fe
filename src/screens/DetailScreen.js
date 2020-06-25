@@ -34,7 +34,7 @@ const DetailScreen = ({ navigation }) => {
             style={styles.button}
             buttonText='Get Directions'
             color={place.color}
-            onPress={() => Linking.openURL('https://www.google.com/maps?daddr=760+West+Genesee+Street+Syracuse+NY+13204')}
+            onPress={() => Linking.openURL(`https://www.google.com/maps?daddr=${place.address?.streetAddress}+${place.address?.city}+${place.address?.state}+${place.address?.zipcode}`)}
           />
         </View>
       </View>
