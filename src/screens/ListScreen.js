@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { fetchAllPlaces } from '../utils/fetchData';
 import Colors from '../constants/Colors';
+import CardList from '../components/CardList';
 
-const ListScreen = () => {
+const ListScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
   const [searchInput, setSearchInput] = useState('');
 
+  useEffect(() => {
+    fetchAllPlaces()
+      .then(fetchedPlaces => setPlaces(fetchedPlaces));
+  }, []);
+
   return (
-    <View style={styles.screen}>
+    <LinearGradient style={styles.screen} colors={[Colors.accentColor, Colors.primaryColor]}>
       <View style={styles.shape}>
         <TextInput 
           onChangeText={(newValue) => setSearchInput(newValue)}
@@ -20,10 +27,9 @@ const ListScreen = () => {
         />
       </View>
       <View style={styles.list}>
-
+        <CardList places={places} navigation={navigation} />
       </View>
-      <Text>This is the List Screen OR IS IT? IT IS.</Text>
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.primaryColor
+    // backgroundColor: Colors.primaryColor
   },
   shape: {
     flex: 1.5,
@@ -57,7 +63,10 @@ const styles = StyleSheet.create({
     // overflow: 'hidden',
   },
   list: {
-    flex: 4
+    flex: 4,
+    height: '100%',
+    width: '100%',
+    alignItems: 'center'
   }
 });
 

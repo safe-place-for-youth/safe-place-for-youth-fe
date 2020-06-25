@@ -1,18 +1,45 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  FlatList, 
+  TouchableOpacity 
+} from 'react-native';
+import LargeCard from './LargeCard';
 
-const  = () => {
+const CardList = ({ places, navigation }) => {
+  const renderPlaceCard = placeData => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate({ routeName: 'Detail', params: {
+          placeId: placeData.item._id
+        }});
+      }}
+    >
+      <LargeCard 
+        placeName={placeData.item.name} 
+        isOpen={true}
+        time='1700'
+      />
+    </TouchableOpacity>
+  );
+
   return (
-    <View style={styles.container}>
-      
-    </View>
+    <FlatList
+          keyExtractor={item => item._id}
+          data={places}
+          renderItem={renderPlaceCard}
+          contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    
+  list: {
+    width: '85%'
   }
 });
 
-export default ;
+export default CardList;
