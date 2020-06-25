@@ -1,7 +1,5 @@
 import React from 'react';
 import { 
-  View, 
-  Text, 
   StyleSheet, 
   FlatList, 
   TouchableOpacity 
@@ -11,6 +9,7 @@ import LargeCard from './LargeCard';
 const CardList = ({ places, navigation }) => {
   const renderPlaceCard = placeData => (
     <TouchableOpacity
+      activeOpacity={0.7}
       onPress={() => {
         navigation.navigate({ routeName: 'Detail', params: {
           placeId: placeData.item._id
@@ -21,6 +20,7 @@ const CardList = ({ places, navigation }) => {
         placeName={placeData.item.name} 
         isOpen={true}
         time='1700'
+        index={placeData.index}
       />
     </TouchableOpacity>
   );

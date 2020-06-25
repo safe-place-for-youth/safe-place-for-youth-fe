@@ -24,6 +24,7 @@ const HomeScreen = ({ navigation }) => {
   
   const renderPlaceCard = placeData => (
     <TouchableOpacity
+      activeOpacity={0.7}
       onPress={() => {
         navigation.navigate({ routeName: 'Detail', params: {
           placeId: placeData.item._id

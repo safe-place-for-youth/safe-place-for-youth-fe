@@ -1,33 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
-import { fetchAllPlaces } from '../utils/fetchData';
-import Colors from '../constants/Colors';
+import { 
+  View, 
+  TextInput,
+  ImageBackground, 
+  StyleSheet, 
+} from 'react-native';
+
 import CardList from '../components/CardList';
+import RadioButtonList from '../components/RadioButtonList';
+import Colors from'../constants/Colors';
+import { useGetPlaces } from '../hooks/getPlaces';
 
 const ListScreen = ({ navigation }) => {
-  const [places, setPlaces] = useState([]);
   const [searchInput, setSearchInput] = useState('');
-
-  useEffect(() => {
-    fetchAllPlaces()
-      .then(fetchedPlaces => setPlaces(fetchedPlaces));
-  }, []);
+  const { filteredPlaces, category, setCategory } = useGetPlaces();
 
   return (
     <LinearGradient style={styles.screen} colors={[Colors.accentColor, Colors.primaryColor]}>
-      <View style={styles.shape}>
-        <TextInput 
-          onChangeText={(newValue) => setSearchInput(newValue)}
-          autoCapitalize='none'
-          autoCorrect={false}
-          value={searchInput}
-          style={styles.searchInput}
-          placeholder='Search'
-        />
+      <View style={styles.headerContainer}>
+        <ImageBackground 
+            source={require('../../assets/shapes/white-concave-shape-shorter-yet.png')} 
+            style={styles.image}
+          >
+            <View style={styles.queryContainer} >
+              <View style={styles.searchContainer}>
+                <TextInput 
+                  onChangeText={(newValue) => setSearchInput(newValue)}
+                  autoCapitalize='none'
+                  autoCorrect={false}
+                  value={searchInput}
+                  style={styles.searchInput}
+                  placeholder='Search'
+                  placeholderTextColor='white'
+                />
+              </View>
+              <View style={styles.radioButtonContainer}>
+                <RadioButtonList category={category} setCategory={setCategory} />
+              </View>
+            </View>
+          </ImageBackground>
       </View>
-      <View style={styles.list}>
-        <CardList places={places} navigation={navigation} />
+      <View style={styles.placeList}>
+        <CardList places={filteredPlaces} navigation={navigation} />
       </View>
     </LinearGradient>
   );
@@ -38,36 +53,50 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: Colors.primaryColor
+    width: '100%',
+    height: '100%'
   },
-  shape: {
-    flex: 1.5,
-    backgroundColor: 'white',
-    width: 430,
-    borderBottomLeftRadius: 250,
-    borderBottomRightRadius: 250,
+  headerContainer: {
+    flex: 1.4,
+    width: '100%',
+    zIndex: 3
+  },
+  image: {
+    width: '100%',
+    height: '120%',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    resizeMode: 'contain',    
+    paddingBottom: '15%',
+  },
+  queryContainer: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center'
+  },
+  searchContainer: {
+    width: '88%',
+    alignItems: 'center',
+    marginTop: '10%',
+    marginBottom: '6%'
+  },
+  radioButtonContainer: {
+    flex: 1,
   },
   searchInput: {
-    width: '80%',
-    margin: 10,
-    padding: 5,
-    borderWidth: 30,
-    borderColor: 'white',
+    width: '100%',
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 5,
     color: 'white',
-    backgroundColor: Colors.primaryColor,
-    // shadowColor: Colors.accentColor,
-    // shadowOpacity: 0.8,
-    // shadowRadius: 10,
-    // overflow: 'hidden',
+    backgroundColor: Colors.primaryColor
   },
-  list: {
+  placeList: {
     flex: 4,
     height: '100%',
     width: '100%',
     alignItems: 'center'
-  }
+   }
 });
 
 export default ListScreen;
