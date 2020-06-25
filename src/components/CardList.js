@@ -1,7 +1,5 @@
 import React from 'react';
 import { 
-  View, 
-  Text, 
   StyleSheet, 
   FlatList, 
   TouchableOpacity 
@@ -22,6 +20,7 @@ const CardList = ({ places, navigation }) => {
         placeName={placeData.item.name} 
         isOpen={true}
         time='1700'
+        index={placeData.index}
       />
     </TouchableOpacity>
   );
