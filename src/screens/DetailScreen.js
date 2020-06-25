@@ -40,7 +40,7 @@ const DetailScreen = ({ navigation }) => {
       </View>
       <View style={styles.blueThing}>
         <View style={styles.contactContainer}>
-          <BodyText style={styles.contactText}>Contact</BodyText>
+          <BodyText style={{...styles.contactText, textDecorationLine: 'underline'}}>Contact</BodyText>
           <TitleText style={{...styles.contactText, fontSize: 26}}>Tabitha Jensen</TitleText>
           <BodyText style={styles.contactText}>Deputy Director</BodyText>
           <View style={styles.buttonContainer}>
@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   contactText: {
-    color: 'white'
+    color: 'white',
+    fontSize: 16
   }
 });
 
