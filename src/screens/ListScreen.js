@@ -3,20 +3,19 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { 
   View, 
   StyleSheet, 
-  FlatList, 
   TextInput 
 } from 'react-native';
 
 import CardList from '../components/CardList';
 import { fetchAllPlaces } from '../utils/fetchData';
-import Colors, { colorCategories } from'../constants/Colors';
-import RadioButton from './RadioButton';
+import RadioButtonList from '../components/RadioButtonList';
+import Colors from'../constants/Colors';
 
 const ListScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
-  const [searchInput, setSearchInput] = useState('');
-  const [category, setCategory] = useState('');
   const [filteredPlaces, setFilteredPlaces] = useState([]);
+  const [category, setCategory] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
     fetchAllPlaces()
@@ -31,8 +30,6 @@ const ListScreen = ({ navigation }) => {
     setFilteredPlaces(filteredElements);
   }, [category])
 
-  const renderFilterButtons = filterData => <RadioButton filterData={filterData} category={category} setCategory={setCategory} />;
-
   return (
     <LinearGradient style={styles.screen} colors={[Colors.accentColor, Colors.primaryColor]}>
       <View style={styles.shape}>
@@ -46,13 +43,7 @@ const ListScreen = ({ navigation }) => {
             placeholder='Search'
             placeholderTextColor='white'
           />
-          <FlatList
-            keyExtractor={item => item.category}
-            data={colorCategories}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            renderItem={renderFilterButtons}
-          />
+          <RadioButtonList category={category} setCategory={setCategory} />
         </View>
       </View>
       <View style={styles.list}>
