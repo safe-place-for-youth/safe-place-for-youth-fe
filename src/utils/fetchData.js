@@ -8,7 +8,6 @@ export const fetchAllPlaces = async() => {
   const places = await base('Safe Places')
     .select({ maxRecords: 25, view: 'Grid view'})
     .all();
-  console.log(places[0]._rawJson.fields);
   return places.map(place => {
     const colorObj = colorCategories.find(obj => obj.category === place._rawJson.fields.category);
       
