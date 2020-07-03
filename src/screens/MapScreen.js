@@ -9,14 +9,8 @@ import * as Location from 'expo-location';
 const MapScreen = () => {
   const [places, setPlaces] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(null);
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-  const [initialRegion, setInitialRegion] = useState({
-    latitude: 45.512794,
-    longitude: -122.679565,
-    latitudeDelta: 0.04,
-    longitudeDelta: 0.04,
-  });
+  const [latitude, setLatitude] = useState(45.512794);
+  const [longitude, setLongitude] = useState(-122.679565);
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
@@ -36,18 +30,6 @@ const MapScreen = () => {
       };
     })();
   });
-
-  useEffect(() => {
-    setInitialRegion(() => ({
-      latitude: latitude,
-      longitude: longitude,
-      latitudeDelta: 0.04,
-      longitudeDelta: 0.04,  
-    }))
-  }, [latitude, longitude]);
-
-  console.log(latitude, longitude, 'after useEffect');
-  console.log(initialRegion, 'initialRegion after useEffect');
 
   if(errorMsg) {
     console.log(errorMsg);
@@ -77,7 +59,12 @@ const MapScreen = () => {
       <MapView 
           style={styles.map} 
           provider='google' 
-          initialRegion={initialRegion}
+          region={{
+            latitude,
+            longitude,
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.04,
+          }}
         >
           {markers}
           {selectedPlace && <BottomShape selectedPlace={selectedPlace} />}
