@@ -61,14 +61,28 @@ const MapScreen = () => {
 
   return (
     <View style={styles.screen}>
+      <MapView 
+            style={styles.map} 
+            provider='google' 
+            initialRegion={{
+              latitude: 45.512794,
+              longitude: -122.679565,
+              latitudeDelta: 0.2,
+              longitudeDelta: 0.2,
+            }}
+          >
+            {markers}
+            {selectedPlace && <BottomShape selectedPlace={selectedPlace} />}
+          </MapView>
+
 {/* If the user granted access to location data, render map in user's location */}
       {/* {latitude !== 0 
         ? <MapView 
             style={styles.map} 
             provider='google' 
             initialRegion={{
-              latitude: latitude,
-              longitude: longitude,
+              latitude: {latitude},
+              longitude: {longitude},
               latitudeDelta: 0.1,
               longitudeDelta: 0.1,
             }}
