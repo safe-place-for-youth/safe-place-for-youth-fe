@@ -15,8 +15,6 @@ const DetailScreen = ({ navigation }) => {
     .then(fetchedPlace => setPlace(fetchedPlace))
   }, []);
 
-  console.log(place);
-
   return (
     <View style={styles.screen}>
       <View style={styles.contentContainer}>

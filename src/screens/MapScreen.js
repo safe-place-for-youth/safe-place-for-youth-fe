@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import BodyText from '../components/BodyText';
 import BottomShape from '../components/BottomShape';
-import TitleText from '../components/TitleText';
 import { fetchAllPlaces } from '../utils/fetchData';
 import * as Location from 'expo-location';
 
@@ -12,6 +11,12 @@ const MapScreen = () => {
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [initialRegion, setInitialRegion] = useState({
+    latitude: 45.512794,
+    longitude: -122.679565,
+    latitudeDelta: 0.04,
+    longitudeDelta: 0.04,
+  });
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
@@ -23,20 +28,29 @@ const MapScreen = () => {
     (async() => {
       let { status } = await Location.requestPermissionsAsync();
       if(status !== 'granted') {
-        setErrorMsg('Permission to access location was denied')
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLatitude(location.coords.latitude);
-      setLongitude(location.coords.longitude);
-      console.log(latitude, longitude, 'coords');
-      // setLocation(location);
+        setErrorMsg('Location permission not granted');
+      } else {
+        let location = await Location.getCurrentPositionAsync({});
+        setLatitude(() => location.coords.latitude);
+        setLongitude(() => location.coords.longitude);
+      };
     })();
   });
 
-  let text = 'Waiting...';
+  useEffect(() => {
+    setInitialRegion(() => ({
+      latitude: latitude,
+      longitude: longitude,
+      latitudeDelta: 0.04,
+      longitudeDelta: 0.04,  
+    }))
+  }, [latitude, longitude]);
+
+  console.log(latitude, longitude, 'after useEffect');
+  console.log(initialRegion, 'initialRegion after useEffect');
+
   if(errorMsg) {
-    text = errorMsg;
+    console.log(errorMsg);
   };
 
   const handleMarkerPress = name => {
@@ -52,7 +66,6 @@ const MapScreen = () => {
     >
       <MapView.Callout tooltip style={styles.customView}>
         <View style={styles.callout}>
-          <BodyText>Your current location is {latitude}</BodyText>
           <BodyText style={{ color }}>{`${name.slice(0, 25)}...`}</BodyText>
         </View>
       </MapView.Callout>
@@ -61,37 +74,14 @@ const MapScreen = () => {
 
   return (
     <View style={styles.screen}>
-{/* If the user granted access to location data, render map in user's location */}
-      {latitude !== 0 
-        ? <MapView 
-            style={styles.map} 
-            provider='google' 
-            initialRegion={{
-              latitude: latitude,
-              longitude: longitude,
-              latitudeDelta: 0.1,
-              longitudeDelta: 0.1,
-            }}
-          >
-            {markers}
-            {selectedPlace && <BottomShape selectedPlace={selectedPlace} />}
-          </MapView>
-
-// Otherwise, render map using default view of Multnomah County
-        : <MapView 
-            style={styles.map} 
-            provider='google' 
-            initialRegion={{
-              latitude: 45.512794,
-              longitude: -122.679565,
-              latitudeDelta: 0.2,
-              longitudeDelta: 0.2,
-            }}
-          >
-            {markers}
-            {selectedPlace && <BottomShape selectedPlace={selectedPlace} />}
-          </MapView>
-      }
+      <MapView 
+          style={styles.map} 
+          provider='google' 
+          initialRegion={initialRegion}
+        >
+          {markers}
+          {selectedPlace && <BottomShape selectedPlace={selectedPlace} />}
+        </MapView>
     </View>
   );
 };
