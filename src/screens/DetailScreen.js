@@ -12,6 +12,7 @@ const DetailScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchPlace(navigation.getParam('placeId'))
+      // .then(fetchedPlace => console.log(fetchedPlace))
       .then(fetchedPlace => setPlace(fetchedPlace));
   }, []);
 

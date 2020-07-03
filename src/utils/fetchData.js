@@ -1,6 +1,7 @@
 import { API_URL, API_KEY, AT_URL } from 'react-native-dotenv';
 import { colorCategories } from '../constants/Colors';
 import Airtable from 'airtable';
+
 const base = new Airtable({apiKey: `${API_KEY}`}).base('appm2DPTBMOxDyjCJ');
 
 // export const fetchAllPlaces = () => {
@@ -12,7 +13,7 @@ const base = new Airtable({apiKey: `${API_KEY}`}).base('appm2DPTBMOxDyjCJ');
 //     // This function (`page`) will get called for each page of records.
 //     records.map(place => {
 //       const colorObj = colorCategories.find(obj => obj.category === place._rawJson.fields.category);
-//       // console.log(place._rawJson.fields);
+//       console.log(place._rawJson.fields);
 //       return {
 //         ...place._rawJson.fields,
 //         color: colorObj.color
@@ -44,17 +45,19 @@ export const fetchAllPlaces = () => {
 };
 
 export const fetchPlace = id => {
-  const place = base('Safe Places').find(id, function(err, record) {
+  return base('Safe Places').find(id, function(err, record) {
     if (err) { console.error(err); return; }
-    console.log('Retrieved', record?._rawJson.fields);
 
-  const colorObj = colorCategories.find(obj => obj.category === place?._rawJson.fields.category);
+  const colorObj = colorCategories.find(obj => obj.category === record?._rawJson.fields.category);
+
+  console.log({
+    ...record?._rawJson.fields,
+    color: colorObj?.color
+  }, 'record w color');
 
   return {
-    ...place?._rawJson.fields,
+    ...record?._rawJson.fields,
     color: colorObj?.color
   }
   });
-
-  return place;
 };
