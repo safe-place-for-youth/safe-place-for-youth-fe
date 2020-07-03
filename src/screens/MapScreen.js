@@ -3,17 +3,37 @@ import { View, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import BodyText from '../components/BodyText';
 import BottomShape from '../components/BottomShape';
-import TitleText from '../components/TitleText';
 import { fetchAllPlaces } from '../utils/fetchData';
+import * as Location from 'expo-location';
 
 const MapScreen = () => {
   const [places, setPlaces] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [latitude, setLatitude] = useState(45.512794);
+  const [longitude, setLongitude] = useState(-122.679565);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     fetchAllPlaces()
       .then(fetchedPlaces => setPlaces(fetchedPlaces));
   }, []);
+
+  useEffect(() => {
+    (async() => {
+      let { status } = await Location.requestPermissionsAsync();
+      if(status !== 'granted') {
+        setErrorMsg('Location permission not granted');
+      } else {
+        let location = await Location.getCurrentPositionAsync({});
+        setLatitude(() => location.coords.latitude);
+        setLongitude(() => location.coords.longitude);
+      };
+    })();
+  });
+
+  if(errorMsg) {
+    console.log(errorMsg);
+  };
 
   const handleMarkerPress = name => {
     setSelectedPlace(name);
@@ -37,18 +57,18 @@ const MapScreen = () => {
   return (
     <View style={styles.screen}>
       <MapView 
-        style={styles.map} 
-        provider='google' 
-        initialRegion={{
-          latitude: 45.512794,
-          longitude: -122.679565,
-          latitudeDelta: 0.2,
-          longitudeDelta: 0.2,
-        }}
-      >
-        {markers}
-        {selectedPlace && <BottomShape selectedPlace={selectedPlace} />}
-      </MapView>
+          style={styles.map} 
+          provider='google' 
+          region={{
+            latitude,
+            longitude,
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.04,
+          }}
+        >
+          {markers}
+          {selectedPlace && <BottomShape selectedPlace={selectedPlace} />}
+        </MapView>
     </View>
   );
 };
