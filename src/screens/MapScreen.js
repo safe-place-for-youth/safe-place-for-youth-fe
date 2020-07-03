@@ -9,8 +9,8 @@ import * as Location from 'expo-location';
 const MapScreen = () => {
   const [places, setPlaces] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(null);
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(45.512794);
+  const [longitude, setLongitude] = useState(-122.679565);
   const [initialRegion, setInitialRegion] = useState({
     latitude: 45.512794,
     longitude: -122.679565,
@@ -77,7 +77,7 @@ const MapScreen = () => {
       <MapView 
           style={styles.map} 
           provider='google' 
-          initialRegion={initialRegion}
+          region={initialRegion}
         >
           {markers}
           {selectedPlace && <BottomShape selectedPlace={selectedPlace} />}
