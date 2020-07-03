@@ -44,20 +44,33 @@ export const fetchAllPlaces = () => {
     .catch((error) => {console.error(error)});
 };
 
-export const fetchPlace = id => {
-  return base('Safe Places').find(id, function(err, record) {
-    if (err) { console.error(err); return; }
+// export const fetchPlace = async(id) => {
+//   const result = await base('Safe Places').find(id, function(err, record) {
+//     if (err) { console.error(err); return; }
 
-  const colorObj = colorCategories.find(obj => obj.category === record?._rawJson.fields.category);
+//     const colorObj = colorCategories.find(obj => obj.category === record?._rawJson.fields.category);
 
-  console.log({
-    ...record?._rawJson.fields,
-    color: colorObj?.color
-  }, 'record w color');
+//     console.log({
+//       ...record?._rawJson.fields,
+//       color: colorObj.color
+//     }, 'inner result');
+
+//     return {
+//       ...record?._rawJson.fields,
+//       color: colorObj.color
+//     }
+//   });
+//   console.log(result, 'outer result');
+//   return result;
+// };
+
+export const fetchPlace = async(id) => {
+  const place = await base('Safe Places').find(id);
+
+  const colorObj = colorCategories.find(obj => obj.category === place?._rawJson.fields.category);
 
   return {
-    ...record?._rawJson.fields,
-    color: colorObj?.color
+    ...place?._rawJson.fields,
+    color: colorObj.color
   }
-  });
 };
