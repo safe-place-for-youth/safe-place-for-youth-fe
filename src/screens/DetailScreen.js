@@ -12,16 +12,18 @@ const DetailScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchPlace(navigation.getParam('placeId'))
-      .then(fetchedPlace => setPlace(fetchedPlace));
+    .then(fetchedPlace => setPlace(fetchedPlace))
   }, []);
+
+  console.log(place);
 
   return (
     <View style={styles.screen}>
       <View style={styles.contentContainer}>
         <TitleText style={{ color: place.color, fontSize: 26 }}>{place.name}</TitleText>
         <View>
-          <BodyText style={styles.address}>{place.address?.streetAddress}</BodyText>
-          <BodyText style={styles.address}>{place.address?.city}, {place.address?.state} {place.address?.zipcode}</BodyText>
+          <BodyText style={styles.address}>{place?.streetAddress}</BodyText>
+          <BodyText style={styles.address}>{place?.city}, {place?.state} {place?.zipcode}</BodyText>
         </View>
         <OpenText isOpen={true} time='1700' />
         <View style={styles.buttonContainer}>
@@ -34,7 +36,7 @@ const DetailScreen = ({ navigation }) => {
             style={styles.button}
             buttonText='Get Directions'
             color={place.color}
-            onPress={() => Linking.openURL(`https://www.google.com/maps?daddr=${place.address?.streetAddress}+${place.address?.city}+${place.address?.state}+${place.address?.zipcode}`)}
+            onPress={() => Linking.openURL(`https://www.google.com/maps?daddr=${place?.streetAddress}+${place?.city}+${place?.state}+${place?.zipcode}`)}
           />
         </View>
       </View>
