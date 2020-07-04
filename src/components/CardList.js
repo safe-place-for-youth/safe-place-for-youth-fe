@@ -19,7 +19,7 @@ const CardList = ({ places, navigation }) => {
       <LargeCard 
         placeName={placeData.item.name} 
         isOpen={true}
-        time='1700'
+        closingTime='1700'
         index={placeData.index}
       />
     </TouchableOpacity>

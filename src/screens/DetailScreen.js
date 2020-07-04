@@ -23,7 +23,7 @@ const DetailScreen = ({ navigation }) => {
           <BodyText style={styles.address}>{place?.streetAddress}</BodyText>
           <BodyText style={styles.address}>{place?.city}, {place?.state} {place?.zipcode}</BodyText>
         </View>
-        <OpenText isOpen={true} time='1700' />
+        <OpenText isOpen={true} closingTime='1700' />
         <View style={styles.buttonContainer}>
           <CustomButton
             style={styles.button}

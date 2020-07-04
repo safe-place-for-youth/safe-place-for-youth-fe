@@ -35,7 +35,7 @@ const HomeScreen = ({ navigation }) => {
         <Card 
           placeName={placeData.item.name} 
           isOpen={true}
-          time='1700'
+          closingTime='1700'
         />
       </TouchableOpacity>
   );

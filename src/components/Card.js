@@ -4,10 +4,10 @@ import TitleText from './TitleText';
 import OpenText from './OpenText';
 import ClosedText from './ClosedText';
 
-const Card = ({ placeName, isOpen, time, style }) => (
+const Card = ({ placeName, isOpen, closingTime, style }) => (
   <View style={{ ...styles.card, ...style }}>
     <TitleText style={styles.heading}>{placeName}</TitleText>
-    {isOpen ? <OpenText time={time} /> : <ClosedText />}
+    {isOpen ? <OpenText closingTime={closingTime} /> : <ClosedText />}
   </View>
 );
 
