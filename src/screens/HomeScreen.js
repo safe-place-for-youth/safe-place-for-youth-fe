@@ -12,9 +12,11 @@ import BodyText from '../components/BodyText';
 import HeadingText from '../components/TitleText';
 import Colors from '../constants/Colors';
 import { fetchAllPlaces } from '../utils/fetchData';
+import { useGetHoursString } from '../hooks/getHoursString';
 
 const HomeScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
+  const { currentTime, openingHoursRecord, closingHoursRecord } = useGetHoursString();
 
   useEffect(() => {
     fetchAllPlaces()
@@ -22,33 +24,6 @@ const HomeScreen = ({ navigation }) => {
       .then(nearestPlaces => setPlaces(nearestPlaces));
   }, []);
 
-  // get current date
-  const currentDate = new Date()
-  // store current date in new variable
-  const today = currentDate;
-  // get current time in ms
-  const currentTime = today.getTime();
- 
-  // get current day of week as number (0-6)
-  const dayOfWeekAsNumber = today.getDay();
-  // convert to day (Sunday - Saturday)
-  const weekdayFactory = {
-    0: 'Sunday',
-    1: 'Monday',
-    2: 'Tuesday',
-    3: 'Wednesday',
-    4: 'Thursday',
-    5: 'Friday',
-    6: 'Saturday'
-  }
-
-  const dayOfWeekAsString = weekdayFactory[dayOfWeekAsNumber];
-  const dayOfWeekLowerCase = dayOfWeekAsString.toLowerCase();
-
-  // get string that matches column in data
-  const openingHoursRecord = `${dayOfWeekLowerCase}_open`;
-  const closingHoursRecord = `${dayOfWeekLowerCase}_close`;
-  
   const renderPlaceCard = placeData => {
     const openingTimeData = placeData.item[openingHoursRecord];
     const closingTimeData = placeData.item[closingHoursRecord];
