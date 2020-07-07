@@ -13,7 +13,7 @@ import HeadingText from '../components/TitleText';
 import Colors from '../constants/Colors';
 import { useGetHoursString } from '../hooks/getHoursString';
 import { fetchAllPlaces } from '../utils/fetchData';
-import { getHoursAndMinutes } from '../utils/getHoursAndMinutes';
+import { getOpenStatus } from '../utils/getOpenStatus';
 
 const HomeScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
@@ -26,34 +26,21 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const renderPlaceCard = placeData => {
-    const openingTimeData = placeData.item[openingHoursRecord];
-    const closingTimeData = placeData.item[closingHoursRecord];
+    const { item, index } = placeData;
+    const { isOpen, closingTimeData} = getOpenStatus(item, currentTime, openingHoursRecord, closingHoursRecord);
 
-    const { hours: openingHours, minutes: openingMinutes } = getHoursAndMinutes(openingTimeData);
-    const { hours: closingHours, minutes: closingMinutes } = getHoursAndMinutes(closingTimeData);
-  
-    // set opening and closing times for current day in ms
-    const openingTimeToday = new Date();
-    openingTimeToday.setHours(openingHours, openingMinutes);
-    
-    const closingTimeToday = new Date();
-    closingTimeToday.setHours(closingHours, closingMinutes);
-
-    // compare current time to opening and closing times
-    const isOpen = currentTime >= openingTimeToday && currentTime < closingTimeToday ? true : false;
-    
     return (
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => {
           navigation.navigate({ routeName: 'Detail', params: {
-            placeId: placeData.item._id
+            placeId: item._id
           }});
         }}
-        style={{ ...styles.card, marginLeft: placeData.index === 0 ? 20 : 0 }}
+        style={{ ...styles.card, marginLeft: index === 0 ? 20 : 0 }}
         >
         <Card 
-          placeName={placeData.item.name} 
+          placeName={item.name} 
           isOpen={isOpen}
           closingTime={closingTimeData}
         />
