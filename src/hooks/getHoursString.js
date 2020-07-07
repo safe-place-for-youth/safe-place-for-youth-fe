@@ -25,7 +25,6 @@ export const useGetHoursString = () => {
    
     const dayOfWeekAsString = weekdayFactory[dayOfWeekAsNumber].toLowerCase();
 
-    // get string that matches column in data
     setOpeningHoursRecord(`${dayOfWeekAsString}_open`);
     setClosingHoursRecord(`${dayOfWeekAsString}_close`);
   }, []);
