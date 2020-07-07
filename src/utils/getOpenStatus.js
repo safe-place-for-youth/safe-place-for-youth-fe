@@ -18,5 +18,5 @@ export const getOpenStatus = (item, currentTime, openingHoursRecord, closingHour
   // compare current time to opening and closing times
   const isOpen = currentTime >= openingTimeToday && currentTime < closingTimeToday ? true : false;
 
-  return { isOpen, closingTimeData};
+  return { isOpen, closingTimeData };
 }

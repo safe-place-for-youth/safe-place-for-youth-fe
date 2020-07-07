@@ -1,5 +1,5 @@
 export const getHoursAndMinutes = timeData => {
-  if(!timeData || timeData.toLowerCase() === 'closed' || timeData.toLowerCase() === 'n/a') {
+  if(!timeData || timeData.toLowerCase() === ('closed' || 'n/a')) {
     const hours = 0;
     const minutes = 0;
     return { hours, minutes };
@@ -11,11 +11,10 @@ export const getHoursAndMinutes = timeData => {
   let hours = parseInt(stringHours, 10);
   const minutes = parseInt(stringMinutes, 10);
 
-  const modifierWithoutPunctuation = modifier.toLowerCase().replace(/./g, '');
-  if(hours === 12 && modifierWithoutPunctuation === 'am') {
+  if(hours === 12 && modifier.toLowerCase() === ('am' || 'a.m.')) {
     hours = 0;
-  };
-  if(modifierWithoutPunctuation === 'pm') {
+  };  
+  if(modifier.toLowerCase() === ('pm' || 'p.m.')) {
     hours = hours + 12;
   };
 

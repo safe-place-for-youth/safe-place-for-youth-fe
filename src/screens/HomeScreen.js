@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
 
   const renderPlaceCard = placeData => {
     const { item, index } = placeData;
-    const { isOpen, closingTimeData} = getOpenStatus(item, currentTime, openingHoursRecord, closingHoursRecord);
+    const { isOpen, closingTimeData } = getOpenStatus(item, currentTime, openingHoursRecord, closingHoursRecord);
 
     return (
       <TouchableOpacity
