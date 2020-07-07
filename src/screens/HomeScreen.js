@@ -11,8 +11,9 @@ import Card from '../components/Card';
 import BodyText from '../components/BodyText';
 import HeadingText from '../components/TitleText';
 import Colors from '../constants/Colors';
-import { fetchAllPlaces } from '../utils/fetchData';
 import { useGetHoursString } from '../hooks/getHoursString';
+import { fetchAllPlaces } from '../utils/fetchData';
+import { getHoursAndMinutes } from '../utils/getHoursAndMinutes';
 
 const HomeScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
@@ -27,33 +28,6 @@ const HomeScreen = ({ navigation }) => {
   const renderPlaceCard = placeData => {
     const openingTimeData = placeData.item[openingHoursRecord];
     const closingTimeData = placeData.item[closingHoursRecord];
-    
-      // get hours and minutes
-    const getHoursAndMinutes = timeData => {
-      if(timeData === 'closed') {
-        const hours = 0;
-        const minutes = 0;
-        return { hours, minutes };
-      }
-
-      const [time, modifier] = timeData.split(' ');
-      const [stringHours, stringMinutes] = time.split(':');
-      
-      // handle edge cases (punctuation, capitalization, empty fields...)
-      
-      let hours = parseInt(stringHours, 10);
-      const minutes = parseInt(stringMinutes, 10);
-
-      if(hours === 12 && modifier === 'am') {
-        hours = 0;
-      };
-      
-      if(modifier === 'pm') {
-        hours = hours + 12;
-      };
-
-      return {hours, minutes};
-    };
 
     const { hours: openingHours, minutes: openingMinutes } = getHoursAndMinutes(openingTimeData);
     const { hours: closingHours, minutes: closingMinutes } = getHoursAndMinutes(closingTimeData);
