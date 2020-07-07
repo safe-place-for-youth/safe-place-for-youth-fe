@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { View, Linking, StyleSheet } from 'react-native';
-import { fetchPlace } from '../utils/fetchData';
 import TitleText from '../components/TitleText';
 import BodyText from '../components/BodyText';
 import OpenText from '../components/OpenText';
+import ClosedText from '../components/ClosedText';
 import CustomButton from '../components/CustomButton';
 import Colors from '../constants/Colors';
+import { fetchPlace } from '../utils/fetchData';
 
 const DetailScreen = ({ navigation }) => {
   const [place, setPlace] = useState({});
-
+  const [isOpen, setIsOpen] = useState(null);
+  const [closingTime, setClosingTime] = useState('');
+  
   useEffect(() => {
+    setIsOpen(navigation.getParam('isOpen'));
+    setClosingTime(navigation.getParam('closingTime'));
     fetchPlace(navigation.getParam('placeId'))
-    .then(fetchedPlace => setPlace(fetchedPlace))
+      .then(fetchedPlace => setPlace(fetchedPlace));
   }, []);
 
   return (
@@ -20,10 +25,10 @@ const DetailScreen = ({ navigation }) => {
       <View style={styles.contentContainer}>
         <TitleText style={{ color: place.color, fontSize: 26 }}>{place.name}</TitleText>
         <View>
-          <BodyText style={styles.address}>{place?.streetAddress}</BodyText>
-          <BodyText style={styles.address}>{place?.city}, {place?.state} {place?.zipcode}</BodyText>
+          <BodyText style={styles.address}>{place.streetAddress}</BodyText>
+          <BodyText style={styles.address}>{place.city}, {place.state} {place.zipcode}</BodyText>
         </View>
-        <OpenText isOpen={true} closingTime='1700' />
+        {isOpen ? <OpenText closingTime={closingTime} /> : <ClosedText />}        
         <View style={styles.buttonContainer}>
           <CustomButton
             style={styles.button}

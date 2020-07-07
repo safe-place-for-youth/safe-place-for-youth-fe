@@ -34,7 +34,9 @@ const HomeScreen = ({ navigation }) => {
         activeOpacity={0.7}
         onPress={() => {
           navigation.navigate({ routeName: 'Detail', params: {
-            placeId: item._id
+            placeId: item._id,
+            isOpen,
+            closingTime: closingTimeData
           }});
         }}
         style={{ ...styles.card, marginLeft: index === 0 ? 20 : 0 }}
