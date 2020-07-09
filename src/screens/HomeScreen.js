@@ -11,34 +11,43 @@ import Card from '../components/Card';
 import BodyText from '../components/BodyText';
 import HeadingText from '../components/TitleText';
 import Colors from '../constants/Colors';
+import { useGetHoursString } from '../hooks/getHoursString';
 import { fetchAllPlaces } from '../utils/fetchData';
+import { getOpenStatus } from '../utils/getOpenStatus';
 
 const HomeScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
+  const { currentTime, openingHoursRecord, closingHoursRecord } = useGetHoursString();
 
   useEffect(() => {
     fetchAllPlaces()
       .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
       .then(nearestPlaces => setPlaces(nearestPlaces));
   }, []);
-  
-  const renderPlaceCard = placeData => (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      onPress={() => {
-        navigation.navigate({ routeName: 'Detail', params: {
-          placeId: placeData.item._id
-        }});
-      }}
-      style={{...styles.card, marginLeft: placeData.index === 0 ? 20 : 0}}
-      >
+
+  const renderPlaceCard = placeData => {
+    const { item, index } = placeData;
+    const { isOpen, closingTimeData } = getOpenStatus(item, currentTime, openingHoursRecord, closingHoursRecord);
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => {
+          navigation.navigate({ routeName: 'Detail', params: {
+            placeId: item._id,
+            isOpen,
+            closingTime: closingTimeData
+          }});
+        }}
+        style={{ ...styles.card, marginLeft: index === 0 ? 20 : 0 }}
+        >
         <Card 
-          placeName={placeData.item.name} 
-          isOpen={true}
-          time='1700'
+          placeName={item.name} 
+          isOpen={isOpen}
+          closingTime={closingTimeData}
         />
       </TouchableOpacity>
-  );
+  )};
 
   return (
     <View style={styles.screen}>
@@ -55,7 +64,7 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.listContainer}>
-          <BodyText style={{...styles.bodyText, color: 'white', marginLeft: 20 }}>nearby</BodyText>
+          <BodyText style={{ ...styles.bodyText, color: 'white', marginLeft: 20 }}>nearby</BodyText>
           <FlatList
             keyExtractor={item => item._id}
             data={places}

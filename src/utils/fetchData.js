@@ -6,7 +6,7 @@ const base = new Airtable({apiKey: `${API_KEY}`}).base('appm2DPTBMOxDyjCJ');
 
 export const fetchAllPlaces = async() => {
   const places = await base('Safe Places')
-    .select({ maxRecords: 25, view: 'Grid view'})
+    .select({ maxRecords: 50, view: 'Grid view'})
     .all();
   return places.map(place => {
     const colorObj = colorCategories.find(obj => obj.category === place._rawJson.fields.category);
@@ -20,11 +20,12 @@ export const fetchAllPlaces = async() => {
 
 export const fetchPlace = async(id) => {
   const place = await base('Safe Places').find(id);
+  const { category } = place._rawJson.fields;
 
-  const colorObj = colorCategories.find(obj => obj.category === place?._rawJson.fields.category);
+  const colorObj = colorCategories.find(obj => obj.category === category);
 
   return {
-    ...place?._rawJson.fields,
+    ...place._rawJson.fields,
     color: colorObj.color
   }
 };
