@@ -6,6 +6,7 @@ import {
   TouchableOpacity, 
   StyleSheet 
 } from 'react-native';
+import { MAPS_API_KEY } from 'react-native-dotenv';
 
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';

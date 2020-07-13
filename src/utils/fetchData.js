@@ -1,4 +1,4 @@
-import { API_URL, API_KEY, AT_URL } from 'react-native-dotenv';
+import { API_URL, API_KEY, AT_URL, MAPS_API_KEY } from 'react-native-dotenv';
 import { colorCategories } from '../constants/Colors';
 import Airtable from 'airtable';
 
@@ -16,7 +16,7 @@ export const fetchAllPlaces = async() => {
       color: colorObj.color
     };
   })
-}
+};
 
 export const fetchPlace = async(id) => {
   const place = await base('Safe Places').find(id);
@@ -28,4 +28,8 @@ export const fetchPlace = async(id) => {
     ...place._rawJson.fields,
     color: colorObj.color
   }
+};
+
+export const fetchNearestPlaces = async(lat, long) => {
+  await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=1000&type=point_of_interest&keyword=divvy&key=${API_KEY}`)
 };
