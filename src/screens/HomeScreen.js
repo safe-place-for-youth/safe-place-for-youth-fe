@@ -6,7 +6,7 @@ import {
   TouchableOpacity, 
   StyleSheet 
 } from 'react-native';
-import { MAPS_API_KEY } from 'react-native-dotenv';
+import * as Location from 'expo-location';
 
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';
@@ -19,11 +19,27 @@ import { getOpenStatus } from '../utils/getOpenStatus';
 const HomeScreen = ({ navigation }) => {
   const [places, setPlaces] = useState([]);
   const { currentTime, openingHoursRecord, closingHoursRecord } = useGetHoursString();
+  const [latitude, setLatitude] = useState(45.512794);
+  const [longitude, setLongitude] = useState(-122.679565);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
-    fetchAllPlaces()
-      .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
-      .then(nearestPlaces => setPlaces(nearestPlaces));
+    (async() => {
+      let { status } = await Location.requestPermissionsAsync();
+      if(status !== 'granted') {
+        setErrorMsg('Location permission not granted');
+      } else {
+        let location = await Location.getCurrentPositionAsync({});
+        setLatitude(() => location.coords.latitude);
+        setLongitude(() => location.coords.longitude);
+      };
+    })();
+  });
+
+  useEffect(() => {
+    fetchNearestPlaces(latitude, longitude)
+      .then(fetchedPlaces => setPlaces(nearestPlaces))
+      .then(nearestPlaces => console.log(nearestPlaces, 'nearest places'));
   }, []);
 
   const renderPlaceCard = placeData => {
