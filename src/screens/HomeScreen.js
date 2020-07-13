@@ -13,7 +13,7 @@ import BodyText from '../components/BodyText';
 import HeadingText from '../components/TitleText';
 import Colors from '../constants/Colors';
 import { useGetHoursString } from '../hooks/getHoursString';
-import { fetchAllPlaces } from '../utils/fetchData';
+import { fetchAllPlaces, fetchNearestPlaces } from '../utils/fetchData';
 import { getOpenStatus } from '../utils/getOpenStatus';
 
 const HomeScreen = ({ navigation }) => {
