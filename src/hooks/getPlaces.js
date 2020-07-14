@@ -20,5 +20,5 @@ export const useGetPlaces = () => {
     setFilteredPlaces(filteredElements);
   }, [category]);
 
-  return { filteredPlaces, category, setCategory }
+  return { places, filteredPlaces, category, setCategory }
 }
