@@ -14,7 +14,7 @@ import { useGetPlaces } from '../hooks/getPlaces';
 
 const ListScreen = ({ navigation }) => {
   const [searchInput, setSearchInput] = useState('');
-  const { filteredPlaces, category, setCategory } = useGetPlaces();
+  const { nearestPlaces, filteredPlaces, category, setCategory } = useGetPlaces();
 
   return (
     <LinearGradient style={styles.screen} colors={[Colors.accentColor, Colors.primaryColor]}>

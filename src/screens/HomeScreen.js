@@ -12,20 +12,14 @@ import BodyText from '../components/BodyText';
 import HeadingText from '../components/TitleText';
 import Colors from '../constants/Colors';
 import { useGetHoursString } from '../hooks/getHoursString';
-import { fetchNearestPlaces } from '../utils/fetchData';
 import { getOpenStatus } from '../utils/getOpenStatus';
 import { useGetUserLocation } from '../hooks/getUserLocation';
+import { useGetPlaces } from '../hooks/getPlaces';
 
 const HomeScreen = ({ navigation }) => {
-  const [places, setPlaces] = useState([]);
   const { currentTime, openingHoursRecord, closingHoursRecord } = useGetHoursString();
-  const { userLatitude, userLongitude, errorMsg } = useGetUserLocation();
-
-  useEffect(() => {
-    fetchNearestPlaces(userLatitude, userLongitude)
-      .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
-      .then(nearestPlaces => setPlaces(nearestPlaces));
-  }, []);
+  const { userLatitude, userLongitude } = useGetUserLocation();
+  const { nearestPlaces } = useGetPlaces(userLatitude, userLongitude);
 
   const renderPlaceCard = placeData => {
     const { item, index } = placeData;
@@ -70,7 +64,7 @@ const HomeScreen = ({ navigation }) => {
           <BodyText style={{ ...styles.bodyText, color: 'white', marginLeft: 20 }}>nearby</BodyText>
           <FlatList
             keyExtractor={item => item._id}
-            data={places}
+            data={nearestPlaces}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             renderItem={renderPlaceCard}
