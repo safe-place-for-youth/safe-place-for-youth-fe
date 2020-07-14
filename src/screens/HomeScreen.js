@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
           placeName={item.name} 
           isOpen={isOpen}
           closingTime={closingTimeData}
-          distance={item.distance.toFixed(2)}
+          distance={item.distance.toFixed(1)}
         />
       </TouchableOpacity>
   )};

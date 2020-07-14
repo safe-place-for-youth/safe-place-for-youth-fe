@@ -18,7 +18,6 @@ export const useGetUserLocation = () => {
       };
     })();
   });
-  console.log('user location', userLatitude, userLongitude)
   return { userLatitude, userLongitude, errorMsg };
 };
 

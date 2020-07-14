@@ -42,7 +42,7 @@ const ListScreen = ({ navigation }) => {
           </ImageBackground>
       </View>
       <View style={styles.placeList}>
-        <CardList places={filteredPlaces} navigation={navigation} />
+        <CardList places={nearestPlaces} navigation={navigation} />
       </View>
     </LinearGradient>
   );
