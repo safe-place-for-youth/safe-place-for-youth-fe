@@ -38,7 +38,8 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchNearestPlaces(latitude, longitude)
-      .then(nearestPlaces => setPlaces(nearestPlaces))
+      .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
+      .then(nearestPlaces => setPlaces(nearestPlaces));
   }, []);
 
   const renderPlaceCard = placeData => {
@@ -61,6 +62,7 @@ const HomeScreen = ({ navigation }) => {
           placeName={item.name} 
           isOpen={isOpen}
           closingTime={closingTimeData}
+          distance={item.distance.toFixed(2)}
         />
       </TouchableOpacity>
   )};

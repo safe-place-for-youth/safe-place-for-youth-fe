@@ -3,9 +3,11 @@ import { View, StyleSheet } from 'react-native';
 import TitleText from './TitleText';
 import OpenText from './OpenText';
 import ClosedText from './ClosedText';
+import Colors from '../constants/Colors';
 
-const Card = ({ placeName, isOpen, closingTime, style }) => (
+const Card = ({ placeName, isOpen, closingTime, style, distance }) => (
   <View style={{ ...styles.card, ...style }}>
+    <TitleText style={styles.distance}>{distance} mi</TitleText>
     <TitleText style={styles.heading}>{placeName}</TitleText>
     {isOpen ? <OpenText closingTime={closingTime} /> : <ClosedText />}
   </View>
@@ -22,6 +24,11 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 14
+  },
+  distance: {
+    fontSize: 14,
+    textAlign: 'right',
+    color: Colors.primaryColor
   }
 });
 
