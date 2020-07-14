@@ -20,12 +20,14 @@ export const useGetPlaces = () => {
   useEffect(() => {
     fetchNearestPlaces(userLatitude, userLongitude)
       // .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
-      .then(nearestPlaces => setNearestPlaces(nearestPlaces));
+      .then(nearestPlaces => {
+        setNearestPlaces(nearestPlaces)
+        setFilteredPlaces(nearestPlaces);
+      });
   }, []);
 
   useEffect(() => {
     const filteredElements = nearestPlaces.filter(place => place.category === category);
-    
     setFilteredPlaces(filteredElements);
   }, [category]);
 
