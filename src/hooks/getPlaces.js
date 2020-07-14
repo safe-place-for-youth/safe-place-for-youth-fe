@@ -19,7 +19,7 @@ export const useGetPlaces = () => {
 
   useEffect(() => {
     fetchNearestPlaces(userLatitude, userLongitude)
-      .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
+      // .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
       .then(nearestPlaces => setNearestPlaces(nearestPlaces));
   }, []);
 

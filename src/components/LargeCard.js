@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 16
+  },
+  distance: {
+    fontSize: 14,
+    textAlign: 'right',
+    color: 'white',
   }
 });
 
