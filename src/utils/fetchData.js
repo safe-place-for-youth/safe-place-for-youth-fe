@@ -38,14 +38,14 @@ export const fetchNearestPlaces = async(latitude, longitude) => {
 
   return places
     .map(place => {
-      const dist = geodist({ lat: latitude, lon: longitude }, { lat: place.latitude, lon: place.longitude });
+      const dist = geodist({ lat: latitude, lon: longitude }, { lat: place._rawJson.fields.latitude, lon: place._rawJson.fields.longitude }, { exact: true });
       const colorObj = colorCategories.find(obj => obj.category === place._rawJson.fields.category);
-        
+
       return {
         ...place._rawJson.fields,
         color: colorObj.color,
         distance: dist
-      };
+      }
     })
-    
+    .sort((a, b) => a.distance - b.distance);
 };

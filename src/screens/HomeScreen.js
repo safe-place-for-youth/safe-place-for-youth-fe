@@ -38,8 +38,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchNearestPlaces(latitude, longitude)
-      .then(fetchedPlaces => setPlaces(nearestPlaces))
-      .then(nearestPlaces => console.log(nearestPlaces, 'nearest places'));
+      .then(nearestPlaces => setPlaces(nearestPlaces))
   }, []);
 
   const renderPlaceCard = placeData => {

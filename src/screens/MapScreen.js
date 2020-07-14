@@ -14,11 +14,6 @@ const MapScreen = () => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
-    fetchAllPlaces()
-      .then(fetchedPlaces => setPlaces(fetchedPlaces));
-  }, []);
-
-  useEffect(() => {
     (async() => {
       let { status } = await Location.requestPermissionsAsync();
       if(status !== 'granted') {
@@ -30,6 +25,11 @@ const MapScreen = () => {
       };
     })();
   });
+
+  useEffect(() => {
+    fetchAllPlaces()
+      .then(fetchedPlaces => setPlaces(fetchedPlaces));
+  }, []);
 
   if(errorMsg) {
     console.log(errorMsg);
