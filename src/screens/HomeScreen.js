@@ -11,15 +11,15 @@ import Card from '../components/Card';
 import BodyText from '../components/BodyText';
 import HeadingText from '../components/TitleText';
 import Colors from '../constants/Colors';
+import { useGetPlaces } from '../hooks/getPlaces';
 import { useGetHoursString } from '../hooks/getHoursString';
 import { getOpenStatus } from '../utils/getOpenStatus';
 import { useGetUserLocation } from '../hooks/getUserLocation';
-import { useGetPlaces } from '../hooks/getPlaces';
 
 const HomeScreen = ({ navigation }) => {
-  const { currentTime, openingHoursRecord, closingHoursRecord } = useGetHoursString();
   const { userLatitude, userLongitude } = useGetUserLocation();
   const { nearestPlaces } = useGetPlaces(userLatitude, userLongitude);
+  const { currentTime, openingHoursRecord, closingHoursRecord } = useGetHoursString();
 
   const renderPlaceCard = placeData => {
     const { item, index } = placeData;

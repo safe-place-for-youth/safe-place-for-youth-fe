@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 
 export const useGetUserLocation = () => {
-  const [userLatitude, setLatitude] = useState(45.512794);
-  const [userLongitude, setLongitude] = useState(-122.679565);
+  const [userLatitude, setUserLatitude] = useState(45.512794);
+  const [userLongitude, setUserLongitude] = useState(-122.679565);
   const [errorMsg, setErrorMsg] = useState(null);
   
   useEffect(() => {
@@ -13,12 +13,12 @@ export const useGetUserLocation = () => {
         setErrorMsg('Location permission not granted');
       } else {
         let location = await Location.getCurrentPositionAsync({});
-        setLatitude(() => location.coords.latitude);
-        setLongitude(() => location.coords.longitude);
+        setUserLatitude(() => location.coords.latitude);
+        setUserLongitude(() => location.coords.longitude);
       };
     })();
   });
-
+  console.log('user location', userLatitude, userLongitude)
   return { userLatitude, userLongitude, errorMsg };
 };
 
