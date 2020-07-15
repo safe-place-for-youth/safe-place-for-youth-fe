@@ -4,10 +4,13 @@ import TitleText from './TitleText';
 import OpenText from './OpenText';
 import ClosedText from './ClosedText';
 
-const LargeCard = ({ placeName, isOpen, closingTime, index, style }) => (
-  <View style={{ ...styles.card, ...style, marginTop: index === 0 ? 90 : 30  }}>
-    <TitleText style={styles.heading}>{placeName}</TitleText>
-    {isOpen ? <OpenText closingTime={closingTime} /> : <ClosedText />}
+const LargeCard = ({ placeName, distance, isOpen, closingTime, index, style }) => (
+  <View>
+    <TitleText style={styles.distance}>{distance} mi</TitleText>
+    <View style={{ ...styles.card, ...style, marginTop: index === 0 ? 90 : 30  }}>
+      <TitleText style={styles.heading}>{placeName}</TitleText>
+      {isOpen ? <OpenText closingTime={closingTime} /> : <ClosedText />}
+    </View>
   </View>
 );
 
@@ -22,6 +25,11 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 16
+  },
+  distance: {
+    fontSize: 14,
+    textAlign: 'right',
+    color: 'white',
   }
 });
 

@@ -14,7 +14,6 @@ const CardList = ({ places, navigation }) => {
   const renderPlaceCard = placeData => {
     const { item, index } = placeData;
     const { isOpen, closingTimeData} = getOpenStatus(item, currentTime, openingHoursRecord, closingHoursRecord);
-
     return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -31,6 +30,7 @@ const CardList = ({ places, navigation }) => {
         isOpen={isOpen}
         closingTime={closingTimeData}
         index={index}
+        distance={item.distance.toFixed(1)}
       />
     </TouchableOpacity>
   )};

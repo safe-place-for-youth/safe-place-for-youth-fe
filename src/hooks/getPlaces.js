@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { fetchAllPlaces } from '../utils/fetchData';
+import { fetchAllPlaces, fetchNearestPlaces } from '../utils/fetchData';
+import { useGetUserLocation } from './getUserLocation';
 
 export const useGetPlaces = () => {
   const [places, setPlaces] = useState([]);
+  const [nearestPlaces, setNearestPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [category, setCategory] = useState('');
+  const { userLatitude, userLongitude } = useGetUserLocation();
 
   useEffect(() => {
     fetchAllPlaces()
@@ -15,10 +18,19 @@ export const useGetPlaces = () => {
   }, []);
 
   useEffect(() => {
-    const filteredElements = places.filter(place => place.category === category);
-    
+    fetchNearestPlaces(userLatitude, userLongitude)
+      // .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
+      .then(nearestPlaces => {
+        setNearestPlaces(nearestPlaces)
+        setFilteredPlaces(nearestPlaces);
+      });
+  }, []);
+
+  useEffect(() => {
+    const filteredElements = nearestPlaces.filter(place => place.category === category);
+    setNearestPlaces(nearestPlaces);
     setFilteredPlaces(filteredElements);
   }, [category]);
 
-  return { filteredPlaces, category, setCategory }
+  return { places, nearestPlaces, filteredPlaces, category, setCategory }
 }

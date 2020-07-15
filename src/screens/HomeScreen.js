@@ -11,19 +11,15 @@ import Card from '../components/Card';
 import BodyText from '../components/BodyText';
 import HeadingText from '../components/TitleText';
 import Colors from '../constants/Colors';
+import { useGetPlaces } from '../hooks/getPlaces';
 import { useGetHoursString } from '../hooks/getHoursString';
-import { fetchAllPlaces } from '../utils/fetchData';
 import { getOpenStatus } from '../utils/getOpenStatus';
+import { useGetUserLocation } from '../hooks/getUserLocation';
 
 const HomeScreen = ({ navigation }) => {
-  const [places, setPlaces] = useState([]);
+  const { userLatitude, userLongitude } = useGetUserLocation();
+  const { nearestPlaces } = useGetPlaces(userLatitude, userLongitude);
   const { currentTime, openingHoursRecord, closingHoursRecord } = useGetHoursString();
-
-  useEffect(() => {
-    fetchAllPlaces()
-      .then(fetchedPlaces => fetchedPlaces.slice(0, 5))
-      .then(nearestPlaces => setPlaces(nearestPlaces));
-  }, []);
 
   const renderPlaceCard = placeData => {
     const { item, index } = placeData;
@@ -45,6 +41,7 @@ const HomeScreen = ({ navigation }) => {
           placeName={item.name} 
           isOpen={isOpen}
           closingTime={closingTimeData}
+          distance={item.distance.toFixed(1)}
         />
       </TouchableOpacity>
   )};
@@ -67,7 +64,7 @@ const HomeScreen = ({ navigation }) => {
           <BodyText style={{ ...styles.bodyText, color: 'white', marginLeft: 20 }}>nearby</BodyText>
           <FlatList
             keyExtractor={item => item._id}
-            data={places}
+            data={nearestPlaces}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             renderItem={renderPlaceCard}
