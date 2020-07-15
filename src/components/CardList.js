@@ -30,7 +30,7 @@ const CardList = ({ places, navigation }) => {
         isOpen={isOpen}
         closingTime={closingTimeData}
         index={index}
-        // distance={item.distance.toFixed(1)}
+        distance={item.distance.toFixed(1)}
       />
     </TouchableOpacity>
   )};

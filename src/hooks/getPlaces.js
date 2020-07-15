@@ -28,6 +28,7 @@ export const useGetPlaces = () => {
 
   useEffect(() => {
     const filteredElements = nearestPlaces.filter(place => place.category === category);
+    setNearestPlaces(nearestPlaces);
     setFilteredPlaces(filteredElements);
   }, [category]);
 
